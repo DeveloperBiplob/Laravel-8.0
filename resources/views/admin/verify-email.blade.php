@@ -17,7 +17,7 @@
                     @endif
         
                     <div class="mt-4 flex items-center justify-between">
-                        <form style="float:left" method="POST" action=""> <!-- route('verification.send') -->
+                        <form style="float:left" method="POST" action="{{ route('admin.verification.send') }}">
                             @csrf
                             <div>
                                 <button class="btn btn-info btn-sm">

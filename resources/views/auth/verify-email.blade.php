@@ -17,19 +17,19 @@
                     @endif
         
                     <div class="mt-4 flex items-center justify-between">
-                        {{-- <form method="POST" action="{{ route('verification.send') }}">
+                        <form method="POST" action="{{ route('verification.send') }}">
                             @csrf
                             <div>
-                                <button>
+                                <button style="float:left" class="btn btn-info btn-xs">
                                     {{ __('Resend Verification Email') }}
                                 </button>
                             </div>
-                        </form> --}}
+                        </form>
         
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
         
-                            <button class="btn btn-info btn-xs" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
+                            <button style="float:right" class="btn btn-info btn-xs" type="submit" class="underline text-sm text-gray-600 hover:text-gray-900">
                                 {{ __('Log Out') }}
                             </button>
                         </form>

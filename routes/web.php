@@ -93,6 +93,15 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     return redirect('/category');
 })->middleware(['auth', 'signed'])->name('verification.verify');
 
+// Resend Email------->
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+
 // Forget Password------->
 
 Route::get('/forgot-password', function () {

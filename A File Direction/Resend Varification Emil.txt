@@ -1,0 +1,13 @@
+1. Define a Post Route-->
+
+2. Change this auth---> 
+middleware(['auth', 'throttle:6,1'])->name('verification.send');
+middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
+
+    // Resend Email------->
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');

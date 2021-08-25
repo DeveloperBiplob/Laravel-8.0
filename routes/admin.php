@@ -85,6 +85,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         return redirect('admin/login');
     })->name('logout');
 
+    // Send Varification Email------->
+
+
     Route::get('/email/verify', function () {
         return view('admin.verify-email');
     })->middleware('auth:admin')->name('verification.notice');
@@ -94,6 +97,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     
         return redirect('admin/dashboard');
     })->middleware(['auth:admin', 'signed'])->name('verification.verify');
+
+    // Resend Email------->
+
+    Route::post('/email/verification-notification', function (Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+
+        return back()->with('message', 'Verification link sent!');
+    })->middleware(['auth:admin', 'throttle:6,1'])->name('verification.send');
 
 
     // Forget Password------->
