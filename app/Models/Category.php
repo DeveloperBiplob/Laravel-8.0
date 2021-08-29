@@ -25,4 +25,9 @@ class Category extends Model
     {
         return ucwords($value);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

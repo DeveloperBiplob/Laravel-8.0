@@ -77,9 +77,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        //
+        // $category = Category::findOrFail($id);
+        return view('category.show', compact('category'));
     }
 
     /**
@@ -88,9 +89,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        // $category = Category::findOrFail($id);
+        return view('category.edit', compact('category'));
     }
 
     /**
@@ -100,9 +102,44 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        // $request->validate([
+        //     'name' => ['required'],
+        //     'image' => ['required']
+        // ]);
+
+        $oldImgPath = $category->image;
+        
+        if($request->file('image')){
+
+            $file = $request->file('image');
+            $fileName = time() . '_' . uniqid() . '.' . $file->extension();
+            storage::putFileAs("public/image", $file, $fileName);
+            $path = "storage/image/" . $fileName;
+            
+            
+            
+            $data = [
+                'name'=> $request->name,
+                'slug'=> Str::slug($request->name),
+                'status'=> $request->status,
+                'image'=> $path,
+            ];
+            $category->update($data);
+
+            if(file_exists($oldImgPath)){
+                unlink($oldImgPath);
+            }
+        }else{
+            $category->update([
+                'name'=> $request->name,
+                'slug'=> Str::slug($request->name),
+                'status'=> $request->status,
+            ]);
+        }
+
+        return redirect()->route('category.index');
     }
 
     /**
@@ -111,8 +148,15 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        // return $category->destroy($category);
+
+        if(file_exists($category->image)){
+            unlink($category->image);
+        }
+        $category->delete();
+        return back();
+
     }
 }

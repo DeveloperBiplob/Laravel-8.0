@@ -26,9 +26,13 @@
                             <td>{{ ($category->status) == 1 ? 'Active' : 'Inactive' }}</td>
                             <td><img height="100px" src="{{ $category->image }}" alt=""></td>
                             <td>
-                                <a class="btn btn-primary btn-xs" href="{{ route('category.edit',$category->id) }}">Edit</a>
-                                <a class="btn btn-info btn-xs" href="{{ route('category.show',$category->id) }}">View</a>
-                                <a class="btn btn-danger btn-xs" href="{{ route('category.update',$category->id) }}">Delete</a>
+                                <a class="btn btn-primary btn-xs" href="{{ route('category.edit',$category->slug) }}">Edit</a>
+                                <a class="btn btn-info btn-xs" href="{{ route('category.show',$category->slug) }}">View</a>
+                                <form class="d-inline" action="{{ route('category.destroy',$category->slug) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button onclick=" return confirm('Are you Sure Delete This Data?')" class="btn btn-danger btn-xs">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
