@@ -10,9 +10,32 @@
             <div class="card">
                 <div class="card-header">
                     <h3 style="float:left">Category</h3>
-                    <a style="float:right" class="btn btn-primary btn-sm" href="{{ route('category.create') }}">Add Caregory</a>
+
+                    {{-- @canany multiple valu niye kaj kore --}}
+                    
+                    @canany(['isAdmin', 'isEditor'])
+                    <a style="float:right" class="btn btn-primary btn-sm" href="{{ route('category.create') }}">Add Caregory</a>   
+                    @endcanany
+
+                    {{-- @can single valu niye kaj kore --}}
+
+                    {{-- @can('isAdmin')
+                    <a style="float:right" class="btn btn-primary btn-sm" href="{{ route('category.create') }}">Add Caregory</a>  
+                    @endcan --}}
+                    
                 </div>
                 <div class="card-body">
+
+                    {{-- @can('isSupperAdmin')
+                        <h1>Is Allow to supper admin</h1>
+                    @endcan
+                    @can('isAdmin')
+                        <h1>Is Allow to admin</h1>
+                    @endcan
+                    @can('isEditor')
+                        <h1>Is Allow to Editor</h1>
+                    @endcan --}}
+                    
                     <table class="table table-bordered">
                         <tr>
                             <th>Name</th>
@@ -26,7 +49,9 @@
                             <td>{{ ($category->status) == 1 ? 'Active' : 'Inactive' }}</td>
                             <td><img height="100px" src="{{ $category->image }}" alt=""></td>
                             <td>
+                                @can('edit-category', $category)
                                 <a class="btn btn-primary btn-xs" href="{{ route('category.edit',$category->slug) }}">Edit</a>
+                                @endcan
                                 <a class="btn btn-info btn-xs" href="{{ route('category.show',$category->slug) }}">View</a>
                                 <form class="d-inline" action="{{ route('category.destroy',$category->slug) }}" method="POST">
                                 @csrf

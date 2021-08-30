@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'slug', 'status', 'image'
+        'name', 'user_id', 'slug', 'status', 'image'
     ];
 
     //mutators-->

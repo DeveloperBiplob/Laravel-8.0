@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Category;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Auth\Access\Response;
 
 class CategoryController extends Controller
 {
@@ -52,9 +55,10 @@ class CategoryController extends Controller
         $path = "storage/image/" . $fileName;
         
         
-        
+
         $data = [
             'name'=> $request->name,
+            'user_id'=>1, // Authorazition perpose
             'slug'=> Str::slug($request->name),
             'status'=> $request->status,
             'image'=> $path,
@@ -91,6 +95,36 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+
+        //     Gate::allows('isAdmin') ? Response::allow()
+        //          : abort(403);
+    
+        //  # Or 
+        //      if (Gate::allows('isAdmin')) {
+        //          dd('Only admin can access this page');
+        //      } else {
+        //          dd('You are not Admin');
+        //      }
+        //     return view('gate.post.create');
+    
+        //   # Or
+        //     if (Gate::denies('isAdmin')) {
+    
+        //         dd('You are not admin');
+    
+        //     } else {
+        //         dd('Admin allowed');
+        //     }
+
+        // controller e use korle, jodi url jene o thake o taw access korte parbe na. 
+        // jodi shudu view file e @can e use kore tile url janle access korte parbe
+        // ti controller plus view 2ta te use korbo
+        Gate::allows('edit-category', $category) ? Response::allow() 
+            : abort(403);
+
+
+
+
         // $category = Category::findOrFail($id);
         return view('category.edit', compact('category'));
     }

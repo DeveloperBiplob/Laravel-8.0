@@ -41,7 +41,7 @@ Route::post('register', function (Request $request) {
     $user = User::create($request->only('name', 'email', 'password'));
     event(new Registered($user));
     $request->session()->regenerate();
-    Auth::guard('web')->login($user);   
+    Auth::guard('web')->login($user); 
     return redirect()->intended('category');
 
 })->name('register');
@@ -152,9 +152,17 @@ Route::post('/reset-password', function (Request $request) {
 
 
 
-
-
-
-
 Route::resource('/category', CategoryController::class)->middleware(['auth', 'verified']);
+
+// Getes Middleware e use --->
+// Route::get('post', fn () => 'Protected!')->middleware('can:isAdmin')->name('post');
+
+// Route::get('/posts/update', '[PostController::class,'update'])->middleware('can:isEditor')->name('post.update');
+
+// Route::get('/posts/create', 'PostController@create')->middleware('can:isUser')->name('post.create');
+
+Route::get('admin-can-access', function () {
+    return 'Admin can access';
+
+})->middleware(['can:isEditor, isAdmin']);
 
