@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\SkillController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -165,4 +166,23 @@ Route::get('admin-can-access', function () {
     return 'Admin can access';
 
 })->middleware(['can:isEditor, isAdmin']);
+
+
+// policy
+
+Route::resource('/skill', SkillController::class)->middleware(['auth', 'verified']);
+
+// policy in middleware
+
+// use App\Models\Post;
+
+// Route::put('/post/{post}', function (Post $post) {
+//     // The current user may update the post...
+// })->middleware('can:update,post');
+
+// # Or You can also use it to avoiding models.
+
+// Route::post('/post', function () {
+//     // The current user may create posts...
+// })->middleware('can:create,App\Models\Post');
 

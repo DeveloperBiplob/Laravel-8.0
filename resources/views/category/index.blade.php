@@ -12,7 +12,7 @@
                     <h3 style="float:left">Category</h3>
 
                     {{-- @canany multiple valu niye kaj kore --}}
-                    
+
                     @canany(['isAdmin', 'isEditor'])
                     <a style="float:right" class="btn btn-primary btn-sm" href="{{ route('category.create') }}">Add Caregory</a>   
                     @endcanany
@@ -26,7 +26,7 @@
                 </div>
                 <div class="card-body">
 
-                    {{-- @can('isSupperAdmin')
+                    @can('isSupperAdmin')
                         <h1>Is Allow to supper admin</h1>
                     @endcan
                     @can('isAdmin')
@@ -34,7 +34,7 @@
                     @endcan
                     @can('isEditor')
                         <h1>Is Allow to Editor</h1>
-                    @endcan --}}
+                    @endcan
                     
                     <table class="table table-bordered">
                         <tr>

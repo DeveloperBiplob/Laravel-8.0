@@ -53,10 +53,19 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="{{ route('category.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Category
+                <span class="right badge badge-danger">New</span>
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('skill.index') }}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Skill
                 <span class="right badge badge-danger">New</span>
               </p>
             </a>
