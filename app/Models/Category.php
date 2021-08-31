@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\CategoryDeleteEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -30,4 +31,11 @@ class Category extends Model
     {
         return 'slug';
     }
+
+
+    protected $dispatchesEvents = [
+        'deleted' => CategoryDeleteEvent::class,
+        // 'created' => CategoryCreateEvent::class,
+        // 'updated' => CategoryUpdateEvent::class,
+    ];
 }

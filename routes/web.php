@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SkillController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 
 
 /*
@@ -186,3 +188,32 @@ Route::resource('/skill', SkillController::class)->middleware(['auth', 'verified
 //     // The current user may create posts...
 // })->middleware('can:create,App\Models\Post');
 
+
+// Cache--->
+
+Route::get('/cache', function () {
+
+    // return Cache::get('name', 'This is default value');
+
+
+    // Cache::get('category', function(){
+    //     return Category::get();
+    // }, 100);
+
+
+    // if(Cache::has('category')){
+    //     return "Ok";
+    // }else{
+    //     return "no";
+    // }
+
+    // remove cache data---------->
+    // return Cache::forget('caches');
+
+    $caches = Cache::rememberForever('caches', function () {
+        return Category::get();
+    });
+
+    // $caches = Category::all();
+    return view('cache.index', compact('caches'));
+})->name('cache')->middleware('auth');

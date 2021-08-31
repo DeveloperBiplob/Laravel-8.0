@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\AdminRegisterEvent;
+use App\Events\CategoryDeleteEvent;
 use App\Listeners\AdminRegisterListener;
+use App\Listeners\CategoryDeleteListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AdminRegisterEvent::class => [
             AdminRegisterListener::class
+        ],
+        CategoryDeleteEvent::class => [
+            CategoryDeleteListener::class
         ]
     ];
 
