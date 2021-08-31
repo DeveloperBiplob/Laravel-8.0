@@ -38,4 +38,19 @@ class Category extends Model
         // 'created' => CategoryCreateEvent::class,
         // 'updated' => CategoryUpdateEvent::class,
     ];
+
+
+    // Cache with boot function-------
+
+    protected static function booted()
+    {
+        static::updated(function () {
+            Cache()->forget('caches');
+        
+            Cache()->rememberForever('caches', function () {
+                return Category::get();
+            });
+
+        });
+    }
 }
