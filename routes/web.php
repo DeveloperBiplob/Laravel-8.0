@@ -217,3 +217,10 @@ Route::get('/cache', function () {
     // $caches = Category::all();
     return view('cache.index', compact('caches'));
 })->name('cache')->middleware('auth');
+
+
+// Cache Response Check
+
+Route::get('/dashboard', function () {
+    return view('auth.dashboard');
+})->name('dashboard')->middleware(['auth', 'verified','response_cache:10']);
