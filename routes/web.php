@@ -286,9 +286,20 @@ Route::get('mail', function(){
     // $user =  User::first('email'); // only user find kore mail korar jonno
     // return Mail::to($user->email)->send(new TestMail);
 
-    $user =  User::first(); // dinamicly user er data database e send korar jonno. and seta mail/TestMail er __construct function e dorte hobe.
+    // $user =  User::first(); // dinamicly user er data database e send korar jonno. and seta mail/TestMail er __construct function e dorte hobe.
 
-    return Mail::to($user->email)->send(new TestMail($user) );
+    // return Mail::to($user->email)->send(new TestMail($user) );
+
+
+    // ----- aker odik ueer ke mial ------ //
+
+    // $users = User::all(); // jodi aker odik user ke mail send kora lage
+    $users = User::whereNull('email_verified_at')->get(); // Condition use kore user find kore mail send.
+
+    foreach($users as $user){
+        return Mail::to($user->email)->send(new TestMail($user) );  
+    }
+
     // return new TestMail($user);
 });
 
