@@ -14,7 +14,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -224,3 +224,50 @@ Route::get('/cache', function () {
 Route::get('/dashboard', function () {
     return view('auth.dashboard');
 })->name('dashboard')->middleware(['auth', 'verified','response_cache:10']);
+
+
+// --------- HTTP Clint ---------- //
+
+// only get method.
+// onno kono api er data show koranor jonno.
+
+$basePath = 'http://127.0.0.1:8000';
+
+Route::get('/http', function () use($basePath){
+    // return Http::get("{{ $basePath }}/category");
+
+    $response =  Http::get("{{ $basePath }}/category");
+    // return $response->body();
+    // return $response->jston();
+    // return $response->status();
+    // return $response->ok();
+    // return $response->headers();
+
+    return view('http.index', [
+        // api er data view file e send korte hole ta jason_decode kore send korte hobe.
+        'data' => json_decode($response->body())
+    ]);
+});
+
+
+// Post mehod.
+// onno kono api te data store korar jonno.
+
+
+$basePath = 'http://127.0.0.1:8000';
+
+Route::get('/http/post', function () use($basePath){
+    // ai data guluke bola hoy api er payload //
+    Http::post("{{ $basePath }}/category", [
+        'title' => 'aonother application',
+        'comment' => 'this is another application',
+        'note' => 'noting'
+    ]);
+
+    $response =  Http::get("{{ $basePath }}/category");
+
+    return view('http.index', [
+        // api er data view file e send korte hole ta jason_decode kore send korte hobe.
+        'data' => json_decode($response->body())
+    ]);
+});
