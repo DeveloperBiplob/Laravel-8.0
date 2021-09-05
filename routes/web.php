@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SkillController;
+use App\Mail\TestMail;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -271,3 +273,22 @@ Route::get('/http/post', function () use($basePath){
         'data' => json_decode($response->body())
     ]);
 });
+
+
+// ---------- Mail ---------- //
+
+Route::get('mail', function(){
+    // Mail template text and design perpose.
+    // return new TestMail();
+
+    // return Mail::to('biplob@mail.com')->send(new TestMail);
+
+    // $user =  User::first('email'); // only user find kore mail korar jonno
+    // return Mail::to($user->email)->send(new TestMail);
+
+    $user =  User::first(); // dinamicly user er data database e send korar jonno. and seta mail/TestMail er __construct function e dorte hobe.
+
+    return Mail::to($user->email)->send(new TestMail($user) );
+    // return new TestMail($user);
+});
+
