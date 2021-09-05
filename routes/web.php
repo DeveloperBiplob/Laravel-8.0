@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SkillController;
+use App\Mail\OrderShipped;
 use App\Mail\TestMail;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
@@ -290,16 +291,28 @@ Route::get('mail', function(){
 
     // return Mail::to($user->email)->send(new TestMail($user) );
 
+    // ------------------------------------------------------------------------------------------//
 
     // ----- aker odik ueer ke mial ------ //
 
     // $users = User::all(); // jodi aker odik user ke mail send kora lage
-    $users = User::whereNull('email_verified_at')->get(); // Condition use kore user find kore mail send.
 
-    foreach($users as $user){
-        return Mail::to($user->email)->send(new TestMail($user) );  
-    }
+    // $users = User::whereNull('email_verified_at')->get(); // Condition use kore user find kore mail send.
+
+    // foreach($users as $user){
+    //     return Mail::to($user->email)->send(new TestMail($user) );  
+    // }
 
     // return new TestMail($user);
+
+    // ------------------------------------------------------------------------------------------//
+
+
+    
+    // ---------- Markdown template ---------- //
+    Mail::to('biplob@mail.com')->send(new OrderShipped);
+
+
+
 });
 
